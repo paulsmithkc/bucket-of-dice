@@ -2,9 +2,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": "./src",
+    "rootDirs": ["./src", "./apps"],
     "outDir": "./dist",
-    "target": "es5",
+    "target": "es2024",
     "module": "commonjs",
     "skipLibCheck": true
   }
