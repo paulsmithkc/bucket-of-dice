@@ -79,7 +79,8 @@ export const DiceRoller: FC<{}> = () => {
       <div className="flex flex-row items-center gap-2">
         <select
           name="mode"
-          className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow min-w-0"
+          className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink-0"
+          style={{ minWidth: '8em' }}
           value={mode}
           onChange={onChangeMode}
         >
