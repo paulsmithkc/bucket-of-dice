@@ -1,0 +1,10 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "target": "es5",
+    "module": "commonjs",
+    "skipLibCheck": true
+  }
+}
