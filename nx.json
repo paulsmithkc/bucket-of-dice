@@ -8,6 +8,9 @@
       "outputs": ["{projectRoot}/build", "{projectRoot}/dist"],
       "cache": true
     },
+    "lint": {
+      "cache": true
+    },
     "test": {
       "cache": true
     }
