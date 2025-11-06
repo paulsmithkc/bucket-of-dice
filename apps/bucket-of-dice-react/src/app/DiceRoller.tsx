@@ -1,5 +1,6 @@
 import { sortBy } from 'lodash'
 import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react'
+import { RollAggregate } from './RollAggregate'
 import { rollDice } from './rollDice'
 import { RollMode, RollResult } from './types'
 

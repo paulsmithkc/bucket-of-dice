@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { RollMode, RollResult } from './types'
 
 export const RollAggregate: FC<{
