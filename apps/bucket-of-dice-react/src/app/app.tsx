@@ -4,14 +4,14 @@ import { DiceRoller } from './DiceRoller'
 
 export const App: FC<{}> = () => {
   return (
-    <div className="flex flex-col gap-2 min-h-screen p-2">
-      <div className="grow">
+    <div className="p-2 flex flex-col gap-2 min-h-screen supports-[height:100dvh]:min-h-dvh">
+      <main className="grow">
         <DiceRoller />
-      </div>
+      </main>
       <hr></hr>
-      <div>
+      <footer>
         <Credit />
-      </div>
+      </footer>
     </div>
   )
 }

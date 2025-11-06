@@ -1,6 +1,8 @@
+import { FC } from 'react'
+
 export const Credit: FC<{}> = () => {
   return (
-    <div>
+    <>
       Created by{' '}
       <a
         className="font-semibold text-blue-500 hover:text-blue-800 hover:underline transition"
@@ -16,6 +18,6 @@ export const Credit: FC<{}> = () => {
       >
         Source Code
       </a>
-    </div>
+    </>
   )
 }
