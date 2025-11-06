@@ -96,7 +96,7 @@ export const DiceRoller: FC<{}> = () => {
             min={1}
             name="threshold"
             placeholder="threshold"
-            className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-0"
+            className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow min-w-0"
             value={threshold}
             onChange={onChangeThreshold}
           />
