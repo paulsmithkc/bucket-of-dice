@@ -1,0 +1,24 @@
+{
+  "name": "bucket-of-dice",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulsmithkc/bucket-of-dice.git"
+  },
+  "keywords": [
+    "dice",
+    "roller",
+    "bucket"
+  ],
+  "author": "Paul Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulsmithkc/bucket-of-dice/issues"
+  },
+  "homepage": "https://github.com/paulsmithkc/bucket-of-dice#readme"
+}
