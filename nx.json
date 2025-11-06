@@ -1,5 +1,24 @@
 {
   "installation": {
     "version": "22.0.2"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "outputs": ["{projectRoot}/build", "{projectRoot}/dist"],
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ],
+  "nxCloudId": "690cb7446c3dfd2281e29ebf"
 }
