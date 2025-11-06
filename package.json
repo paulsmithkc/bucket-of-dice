@@ -2,8 +2,11 @@
   "name": "bucket-of-dice",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
+    "start": "node build/index.js",
+    "dev": "npx ts-node src",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +23,10 @@
   "bugs": {
     "url": "https://github.com/paulsmithkc/bucket-of-dice/issues"
   },
-  "homepage": "https://github.com/paulsmithkc/bucket-of-dice#readme"
+  "homepage": "https://github.com/paulsmithkc/bucket-of-dice#readme",
+  "dependencies": {
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3"
+  }
 }
