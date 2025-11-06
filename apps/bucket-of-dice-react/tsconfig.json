@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
     "jsx": "react-jsx",
     "allowJs": false,
     "esModuleInterop": false,
