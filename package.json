@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "dev": "npx nx run-many --target=dev --all",
-    "build": "npx nx run-many --target=build --all",
-    "lint": "npx nx run-many --target=lint --all",
-    "test": "npx nx run-many --target=test --all"
+    "dev": "npx nx run bucket-of-dice-react:dev",
+    "build": "npx nx run bucket-of-dice-react:build",
+    "lint": "npx nx run bucket-of-dice-react:lint",
+    "test": "npx nx run bucket-of-dice-react:test"
   },
   "repository": {
     "type": "git",
