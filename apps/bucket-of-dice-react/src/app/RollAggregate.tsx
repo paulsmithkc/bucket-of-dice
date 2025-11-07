@@ -1,17 +1,17 @@
 import { FC, useMemo } from 'react'
-import { RollMode, RollResult } from './types'
+import { AggregateMode, RollResult } from './types'
 
 export const RollAggregate: FC<{
-  mode: RollMode
+  aggregate: AggregateMode
   threshold: number
   results: RollResult[]
-}> = ({ mode, threshold, results }) => {
-  switch (mode) {
-    case RollMode.Threshold:
+}> = ({ aggregate, threshold, results }) => {
+  switch (aggregate) {
+    case AggregateMode.Threshold:
       return <RollAggregateThreshold threshold={threshold} results={results} />
-    case RollMode.Sum:
+    case AggregateMode.Sum:
       return <RollAggregateSum results={results} />
-    case RollMode.Max:
+    case AggregateMode.Max:
       return <RollAggregateMax results={results} />
   }
 }

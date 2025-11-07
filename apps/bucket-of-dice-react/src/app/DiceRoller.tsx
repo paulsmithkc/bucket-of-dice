@@ -2,13 +2,16 @@ import { sortBy } from 'lodash'
 import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react'
 import { RollAggregate } from './RollAggregate'
 import { rollDice } from './rollDice'
-import { RollMode, RollResult } from './types'
+import { AdvantageMode, AggregateMode, RollResult } from './types'
 
 export const DiceRoller: FC<{}> = () => {
   const [quantity, setQuantity] = useState<number>(100)
   const [sides, setSides] = useState<number>(20)
   const [threshold, setThreshold] = useState<number>(13)
-  const [mode, setMode] = useState<RollMode>(RollMode.Threshold)
+  const [advantage, setAdvantage] = useState<AdvantageMode>(AdvantageMode.None)
+  const [aggregate, setAggregate] = useState<AggregateMode>(
+    AggregateMode.Threshold,
+  )
   const [results, setResults] = useState<RollResult[]>()
 
   const onChangeQuantity = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -23,8 +26,12 @@ export const DiceRoller: FC<{}> = () => {
     setThreshold(parseInt(e.currentTarget.value, 10))
   }, [])
 
-  const onChangeMode = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    setMode(e.currentTarget.value as RollMode)
+  const onChangeAdvantage = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    setAdvantage(e.currentTarget.value as AdvantageMode)
+  }, [])
+
+  const onChangeAggregate = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    setAggregate(e.currentTarget.value as AggregateMode)
   }, [])
 
   const onRoll = useCallback(() => {
@@ -32,7 +39,7 @@ export const DiceRoller: FC<{}> = () => {
       return
     }
 
-    const resMap = rollDice(quantity, sides)
+    const resMap = rollDice(quantity, sides, advantage)
     const resArray = [] as RollResult[]
 
     for (const entry of resMap.entries()) {
@@ -41,7 +48,7 @@ export const DiceRoller: FC<{}> = () => {
 
     const resSorted = sortBy(resArray, (x) => x.key)
     setResults(resSorted)
-  }, [quantity, sides])
+  }, [quantity, sides, advantage])
 
   return (
     <div className="flex flex-col gap-2">
@@ -75,22 +82,37 @@ export const DiceRoller: FC<{}> = () => {
           Roll
         </button>
       </div>
-      <hr></hr>
       <div className="flex flex-row items-center gap-2">
         <select
-          name="mode"
+          name="advantage"
           className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink-0"
           style={{ minWidth: '8em' }}
-          value={mode}
-          onChange={onChangeMode}
+          value={advantage}
+          onChange={onChangeAdvantage}
         >
-          {Object.values(RollMode).map((x) => (
+          {Object.values(AdvantageMode).map((x) => (
             <option key={x} value={x}>
               {x}
             </option>
           ))}
         </select>
-        {mode === RollMode.Threshold && (
+      </div>
+      <hr></hr>
+      <div className="flex flex-row items-center gap-2">
+        <select
+          name="aggregate"
+          className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink-0"
+          style={{ minWidth: '8em' }}
+          value={aggregate}
+          onChange={onChangeAggregate}
+        >
+          {Object.values(AggregateMode).map((x) => (
+            <option key={x} value={x}>
+              {x}
+            </option>
+          ))}
+        </select>
+        {aggregate === AggregateMode.Threshold && (
           <input
             type="number"
             step={1}
@@ -110,7 +132,7 @@ export const DiceRoller: FC<{}> = () => {
           <div>You rolled...</div>
           <div className="my-2 text-red-500 font-semibold">
             <RollAggregate
-              mode={mode}
+              aggregate={aggregate}
               threshold={threshold}
               results={results}
             />
