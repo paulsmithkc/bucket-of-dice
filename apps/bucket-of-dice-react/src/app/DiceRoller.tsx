@@ -60,88 +60,96 @@ export const DiceRoller: FC<{}> = () => {
   return (
     <div className="flex flex-col gap-2">
       <div className="font-semibold">Lets roll a bucket of dice!</div>
-      <div className="flex flex-row items-center gap-2">
-        <input
-          type="number"
-          step={1}
-          min={1}
-          name="quantity"
-          placeholder="quantity"
-          className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink min-w-0"
-          value={quantity}
-          onChange={onChangeQuantity}
-        />
-        <span>D</span>
-        <input
-          type="number"
-          step={1}
-          min={1}
-          name="sides"
-          placeholder="sides"
-          className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink min-w-0"
-          value={sides}
-          onChange={onChangeSides}
-        />
-        <button
-          className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
-          onClick={onRoll}
-        >
-          Roll
-        </button>
-      </div>
-      <div className="flex flex-row items-center gap-2">
-        <select
-          name="advantage"
-          className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink-0"
-          style={{ minWidth: '8em' }}
-          value={advantage}
-          onChange={onChangeAdvantage}
-        >
-          {Object.values(AdvantageMode).map((x) => (
-            <option key={x} value={x}>
-              {x}
-            </option>
-          ))}
-        </select>
-        <span>+</span>
-        <input
-          type="number"
-          step={1}
-          name="mod"
-          placeholder="mod"
-          className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink min-w-0"
-          value={mod}
-          onChange={onChangeMod}
-        />
-        <span>to each roll</span>
-      </div>
-      <hr></hr>
-      <div className="flex flex-row items-center gap-2">
-        <select
-          name="aggregate"
-          className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink-0"
-          style={{ minWidth: '8em' }}
-          value={aggregate}
-          onChange={onChangeAggregate}
-        >
-          {Object.values(AggregateMode).map((x) => (
-            <option key={x} value={x}>
-              {x}
-            </option>
-          ))}
-        </select>
-        {aggregate === AggregateMode.Threshold && (
+      <div>
+        <div className="text-xs">Dice Pool</div>
+        <div className="flex flex-row items-center gap-2">
           <input
             type="number"
             step={1}
             min={1}
-            name="threshold"
-            placeholder="threshold"
-            className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow min-w-0"
-            value={threshold}
-            onChange={onChangeThreshold}
+            name="quantity"
+            placeholder="quantity"
+            className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink min-w-0"
+            value={quantity}
+            onChange={onChangeQuantity}
           />
-        )}
+          <span>D</span>
+          <input
+            type="number"
+            step={1}
+            min={1}
+            name="sides"
+            placeholder="sides"
+            className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink min-w-0"
+            value={sides}
+            onChange={onChangeSides}
+          />
+          <button
+            className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
+            onClick={onRoll}
+          >
+            Roll
+          </button>
+        </div>
+      </div>
+      <div>
+        <div className="text-xs">Modifiers</div>
+        <div className="flex flex-row items-center gap-2">
+          <select
+            name="advantage"
+            className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink-0"
+            style={{ minWidth: '8em' }}
+            value={advantage}
+            onChange={onChangeAdvantage}
+          >
+            {Object.values(AdvantageMode).map((x) => (
+              <option key={x} value={x}>
+                {x}
+              </option>
+            ))}
+          </select>
+          <span>+</span>
+          <input
+            type="number"
+            step={1}
+            name="mod"
+            placeholder="mod"
+            className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink min-w-0"
+            value={mod}
+            onChange={onChangeMod}
+          />
+          <span>to each roll</span>
+        </div>
+      </div>
+      <div>
+        <div className="text-xs">Aggregate</div>
+        <div className="flex flex-row items-center gap-2">
+          <select
+            name="aggregate"
+            className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink-0"
+            style={{ minWidth: '8em' }}
+            value={aggregate}
+            onChange={onChangeAggregate}
+          >
+            {Object.values(AggregateMode).map((x) => (
+              <option key={x} value={x}>
+                {x}
+              </option>
+            ))}
+          </select>
+          {aggregate === AggregateMode.Threshold && (
+            <input
+              type="number"
+              step={1}
+              min={1}
+              name="threshold"
+              placeholder="threshold"
+              className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow min-w-0"
+              value={threshold}
+              onChange={onChangeThreshold}
+            />
+          )}
+        </div>
       </div>
       <hr></hr>
       {!results && <div>Ready to roll the dice?</div>}
