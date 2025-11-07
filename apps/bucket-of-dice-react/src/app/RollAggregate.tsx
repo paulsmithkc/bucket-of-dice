@@ -24,7 +24,9 @@ export const RollAggregate: FC<{
 }
 
 export const RollAggregateMod: FC<{ mod: number }> = ({ mod }) => {
-  return mod ? `(with ${mod < 0 ? '-' : '+'}${Math.abs(mod)})` : null
+  return mod
+    ? `(with ${mod < 0 ? '-' : '+'}${Math.abs(mod)} to each roll)`
+    : null
 }
 
 export const RollAggregateThreshold: FC<{
