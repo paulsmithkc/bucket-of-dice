@@ -7,6 +7,7 @@ import { AdvantageMode, AggregateMode, RollResult } from './types'
 export const DiceRoller: FC<{}> = () => {
   const [quantity, setQuantity] = useState<number>(100)
   const [sides, setSides] = useState<number>(20)
+  const [mod, setMod] = useState<number>(0)
   const [threshold, setThreshold] = useState<number>(13)
   const [advantage, setAdvantage] = useState<AdvantageMode>(AdvantageMode.None)
   const [aggregate, setAggregate] = useState<AggregateMode>(
@@ -22,6 +23,10 @@ export const DiceRoller: FC<{}> = () => {
     setSides(parseInt(e.currentTarget.value, 10))
   }, [])
 
+  const onChangeMod = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setMod(parseInt(e.currentTarget.value, 10))
+  }, [])
+
   const onChangeThreshold = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setThreshold(parseInt(e.currentTarget.value, 10))
   }, [])
@@ -35,11 +40,7 @@ export const DiceRoller: FC<{}> = () => {
   }, [])
 
   const onRoll = useCallback(() => {
-    if (!quantity || !sides) {
-      return
-    }
-
-    const resMap = rollDice(quantity, sides, advantage)
+    const resMap = rollDice(quantity ?? 0, sides ?? 0, advantage)
     const resArray = [] as RollResult[]
 
     for (const entry of resMap.entries()) {
@@ -96,6 +97,17 @@ export const DiceRoller: FC<{}> = () => {
             </option>
           ))}
         </select>
+        <span>+</span>
+        <input
+          type="number"
+          step={1}
+          name="mod"
+          placeholder="mod"
+          className="p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent grow shrink min-w-0"
+          value={mod}
+          onChange={onChangeMod}
+        />
+        <span>to each roll</span>
       </div>
       <hr></hr>
       <div className="flex flex-row items-center gap-2">
@@ -134,15 +146,19 @@ export const DiceRoller: FC<{}> = () => {
             <RollAggregate
               aggregate={aggregate}
               threshold={threshold}
+              mod={mod}
               results={results}
             />
           </div>
           <ul className="flex flex-col ml-5 gap-0">
-            {results?.map((x) => (
+            {results?.map((x, i) => (
               <li
                 key={x.key}
                 className={
-                  (threshold && x.key >= threshold
+                  ((aggregate === AggregateMode.Threshold &&
+                    threshold &&
+                    x.key + mod >= threshold) ||
+                  (aggregate === AggregateMode.Max && i === results.length - 1)
                     ? 'text-red-500 font-semibold'
                     : '') + ' flex flex-row'
                 }

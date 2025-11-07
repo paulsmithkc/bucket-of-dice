@@ -4,22 +4,34 @@ import { AggregateMode, RollResult } from './types'
 export const RollAggregate: FC<{
   aggregate: AggregateMode
   threshold: number
+  mod: number
   results: RollResult[]
-}> = ({ aggregate, threshold, results }) => {
+}> = ({ aggregate, threshold, mod, results }) => {
   switch (aggregate) {
     case AggregateMode.Threshold:
-      return <RollAggregateThreshold threshold={threshold} results={results} />
+      return (
+        <RollAggregateThreshold
+          threshold={threshold}
+          mod={mod}
+          results={results}
+        />
+      )
     case AggregateMode.Sum:
-      return <RollAggregateSum results={results} />
+      return <RollAggregateSum mod={mod} results={results} />
     case AggregateMode.Max:
-      return <RollAggregateMax results={results} />
+      return <RollAggregateMax mod={mod} results={results} />
   }
+}
+
+export const RollAggregateMod: FC<{ mod: number }> = ({ mod }) => {
+  return mod ? `(with ${mod < 0 ? '-' : '+'}${Math.abs(mod)})` : null
 }
 
 export const RollAggregateThreshold: FC<{
   threshold: number
+  mod: number
   results: RollResult[]
-}> = ({ threshold, results }) => {
+}> = ({ threshold, mod, results }) => {
   const overThreshold = useMemo(() => {
     if (!results || !threshold) {
       return null
@@ -27,20 +39,27 @@ export const RollAggregateThreshold: FC<{
 
     let overThreshold = 0
     for (const entry of results) {
-      if (entry.key >= threshold) {
+      const val = entry.key + mod
+      if (val >= threshold) {
         overThreshold += entry.value
       }
     }
 
     return overThreshold
-  }, [threshold, results])
+  }, [mod, threshold, results])
 
-  return <>{overThreshold} times at the threshold or above</>
+  return (
+    <>
+      {overThreshold} times at the threshold or above{' '}
+      <RollAggregateMod mod={mod} />
+    </>
+  )
 }
 
 export const RollAggregateSum: FC<{
+  mod: number
   results: RollResult[]
-}> = ({ results }) => {
+}> = ({ mod, results }) => {
   const sum = useMemo(() => {
     if (!results) {
       return null
@@ -48,18 +67,24 @@ export const RollAggregateSum: FC<{
 
     let sum = 0
     for (const entry of results) {
-      sum += entry.key * entry.value
+      const key = entry.key + mod
+      sum += key * entry.value
     }
 
     return sum
-  }, [results])
+  }, [mod, results])
 
-  return <>{sum} total of all rolls</>
+  return (
+    <>
+      {sum} total of all rolls <RollAggregateMod mod={mod} />
+    </>
+  )
 }
 
 export const RollAggregateMax: FC<{
+  mod: number
   results: RollResult[]
-}> = ({ results }) => {
+}> = ({ mod, results }) => {
   const max = useMemo(() => {
     if (!results) {
       return null
@@ -67,13 +92,18 @@ export const RollAggregateMax: FC<{
 
     let max = 0
     for (const entry of results) {
-      if (entry.key > max) {
-        max = entry.key
+      const key = entry.key + mod
+      if (key > max) {
+        max = key
       }
     }
 
     return max
-  }, [results])
+  }, [mod, results])
 
-  return <>{max} max of all rolls</>
+  return (
+    <>
+      {max} max of all rolls <RollAggregateMod mod={mod} />
+    </>
+  )
 }
