@@ -13,6 +13,7 @@ export const DiceRoller: FC<{}> = () => {
   const [aggregate, setAggregate] = useState<AggregateMode>(
     AggregateMode.Threshold,
   )
+  const [poolRolled, setPoolRolled] = useState<string>('')
   const [results, setResults] = useState<RollResult[]>()
 
   const onChangeQuantity = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +41,11 @@ export const DiceRoller: FC<{}> = () => {
   }, [])
 
   const onRoll = useCallback(() => {
-    const resMap = rollDice(quantity ?? 0, sides ?? 0, advantage)
+    const pool =
+      `${quantity}D${sides}` +
+      (advantage !== AdvantageMode.None ? ` with ${advantage}` : '')
+
+    const resMap = rollDice(quantity, sides, advantage)
     const resArray = [] as RollResult[]
 
     for (const entry of resMap.entries()) {
@@ -48,6 +53,7 @@ export const DiceRoller: FC<{}> = () => {
     }
 
     const resSorted = sortBy(resArray, (x) => x.key)
+    setPoolRolled(pool)
     setResults(resSorted)
   }, [quantity, sides, advantage])
 
@@ -141,7 +147,7 @@ export const DiceRoller: FC<{}> = () => {
       {!results && <div>Ready to roll the dice?</div>}
       {results && (
         <div>
-          <div>You rolled...</div>
+          <div>You rolled... {poolRolled}</div>
           <div className="my-2 text-red-500 font-semibold">
             <RollAggregate
               aggregate={aggregate}
